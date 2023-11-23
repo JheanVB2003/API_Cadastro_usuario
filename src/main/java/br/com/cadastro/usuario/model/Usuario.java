@@ -1,60 +1,34 @@
 package br.com.cadastro.usuario.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+import java.util.UUID;
+
+@Data
 @Entity
 @Table(name = "usuario_user")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID) //tipo UUID para gerar ID aleatoriamente
     @Column(name = "id")
-    private Integer  id;
+    private UUID  id;
+    @NotBlank(message = "O Nome é obrigatório!")
     @Column(name = "nome", length = 200, nullable = false)
     private String nome;
-    @Column(name = "email", length = 50, nullable = true)
+    @NotBlank(message = "O CPF é obrigatório!")
+    @Column(name = "cpf", length = 14, nullable = false, unique = true)
+    private String CPF;
+    @NotBlank(message = "O EMAIL é obrigatório!")
+    @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
-    @Column(name = "senha", columnDefinition = "TEXT" , nullable = true)
+    @NotBlank(message = "A senha é obrigatória!")
+    @Column(name = "senha", columnDefinition = "TEXT" , nullable = false)
     private String senha;
-    @Column(name = "telefone", length = 14, nullable = true)
+    @NotBlank(message = "O telefone é obrigatório!")
+    @Column(name = "telefone", length = 14, nullable = false)
     private String telefone;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
 }
